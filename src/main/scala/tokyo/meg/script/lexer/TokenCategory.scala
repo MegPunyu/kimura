@@ -1,0 +1,41 @@
+package tokyo.meg.script.lexer
+
+enum TokenCategory:
+  case Macro
+  case Comment
+  case Semi
+  case Colon
+  case Where
+  case Else
+  case ColonColon
+  case Equals
+  case GtLt
+  case LFunnel
+  case RFunnel
+  case Quest
+  case If
+  case Placeholder
+  case At
+  case QuestColon
+  case AtColon
+  case LArrow
+  case PeriodPeriod
+  case Period
+  case RArrow
+  case Dollar
+  case Indent
+  case Unindent
+  case LParen
+  case RParen
+  case LBrace
+  case RBrace
+  case LBrack
+  case RBrack
+  case Operator
+  case IdentifierOperator
+  case Identifier
+  case Anonymous
+  case LiteralInt
+  case LiteralReal
+  case LiteralStr
+  case Eof
