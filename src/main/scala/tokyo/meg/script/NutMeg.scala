@@ -13,9 +13,14 @@ import tokyo.meg.script.treewalker._
 import tokyo.meg.script.treewalker.values._
 
 @main def main(args: String*): Unit =
-  val path = if (args.length == 0) "main.meg" else args(0)
+  val path = if (args.length == 0) None else Some(args(0))
 
-  FileReader.open(path): reader =>
+  val reader = path match {
+    case Some(path) => FileReader.open[Value](path)
+    case None       => Reader.open[Value](System.in)
+  }
+
+  reader: reader =>
     val cursor = Cursor(reader)
     val lexer = Lexer(cursor)
     val parser = Parser(lexer)
@@ -26,7 +31,12 @@ import tokyo.meg.script.treewalker.values._
   match {
     case Failure(exception: IOException) =>
       System.err.println(
-        s"An error occurred while processing the file \"$path\": ${exception.getMessage()}"
+        path match
+          case Some(path) =>
+            s"An error occurred while processing the file \"$path\": ${exception.getMessage()}"
+
+          case _ =>
+            s"An error occurred while processing the input: ${exception.getMessage()}"
       )
 
       1
@@ -40,7 +50,10 @@ import tokyo.meg.script.treewalker.values._
 
       1
 
-    case Success(_) =>
-      0
+    case Success(value) =>
+      value match
+        case IntValue(value)  => value.toInt
+        case RealValue(value) => value.toInt
+        case _                => 0
 
   } pipe System.exit

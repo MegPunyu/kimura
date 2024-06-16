@@ -4,8 +4,10 @@ import scala.util.chaining._
 
 import tokyo.meg.script.io._
 
-final class Cursor(private val reader: FileReader) extends Iterator[Char]:
-  val parentPath = reader.parentPath
+final class Cursor(private val reader: Reader) extends Iterator[Char]:
+  val parentPath = reader match
+    case reader: FileReader => reader.parentPath
+    case _                  => "."
 
   private var _currentLine: Option[String] = Some("")
   private var _atEof = false

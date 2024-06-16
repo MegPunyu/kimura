@@ -109,8 +109,8 @@ final private case class ArrayValue() extends Value:
   def repeat: Value = biFunction:
     case (S(a), I(b)) => a.repeat(b.toInt)
     case (S(a), R(b)) => a.repeat(b.toInt)
-    case (L(a), I(b)) => ArrayBuffer.fill(b.toInt)(a).flatten()
-    case (L(a), R(b)) => ArrayBuffer.fill(b.toInt)(a).flatten()
+    case (L(a), I(b)) => ArrayBuffer.fill(b.toInt)(a).flatten
+    case (L(a), R(b)) => ArrayBuffer.fill(b.toInt)(a).flatten
     case _            => EmptyValue()
 
   def concat: Value = biFunction:
